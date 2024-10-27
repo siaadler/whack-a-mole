@@ -19,9 +19,15 @@ MainWindow::MainWindow(QWidget *parent)
 
   for (auto mole : moles) {
     connect(mole, &QPushButton::clicked, this, [=] {
-      mole->setStyleSheet("");
+      const QPixmap pixmap("../../media/mole-hit.png");
+      mole->setIcon(QIcon(pixmap));
+      mole->setIconSize(pixmap.rect().size());
       molesUp.erase(mole);
     });
+
+    const QPixmap pixmap("../../media/mole-empty.png");
+    mole->setIcon(QIcon(pixmap));
+    mole->setIconSize(pixmap.rect().size());
   }
 
   rng.seed(QDateTime::currentMSecsSinceEpoch());
@@ -61,6 +67,8 @@ void MainWindow::step() {
 
 void MainWindow::popupMole() {
   QPushButton *mole = moles[rng.generate() % moles.size()];
-  mole->setStyleSheet("background-color:red;");
+  const QPixmap pixmap("../../media/mole-up.png");
+  mole->setIcon(QIcon(pixmap));
+  mole->setIconSize(pixmap.rect().size());
   molesUp.insert(mole);
 }
